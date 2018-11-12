@@ -8,11 +8,11 @@ import java.util.Collections;
 public class Dijkstra {
     ArrayList<Node> nodeList = new ArrayList<>();
     public Dijkstra(Grafleser leser){
-        this.nodeList = leser.nodeList;
+        this.nodeList = (ArrayList<Node>) leser.nodeList.clone();
     }
     int teller = 0;
 
-    public int run(int startIndex, int endIndex){
+    public String run(int startIndex, int endIndex){
         ArrayList<Node> prio = new ArrayList<>(); //Bedre prio-kø: Heap
         Node start = nodeList.get(startIndex);
         start.dist = 0;
@@ -43,13 +43,13 @@ public class Dijkstra {
 
         Node node = nodeList.get(startIndex);
         nodeList = sortNodeListByNumber(nodeList);
-        System.out.println( "N: Node, A: Ancestor, L: minLength\nStartNode: " + node.name + "\nN | A | L");
+        String res = "N: Node, A: Ancestor, L: minLength\nStartNode: " + node.name + "\nN | A | L\n";
         for(Node n : nodeList){
-            System.out.println(n.name + " | " +  (n.ancestor != null ? n.ancestor.name : "§") + " | " + n.dist);
+            res += n.name + " | " +  (n.ancestor != null ? n.ancestor.name : "§") + " | " + n.dist + "\n";
         }
-        System.out.println("Antall noder tatt ut av køen: " + teller);
+        res += "Antall noder tatt ut av køen: " + teller;
         Node endNode = nodeList.get(endIndex);
-        return endNode.dist;
+        return res + "\nkortest distanse = " + endNode.dist;
     }
 
     protected ArrayList<Node> sortNodeListByNumber(ArrayList<Node> list){

@@ -11,7 +11,7 @@ public class Astar {
 
     public Astar(Grafleser leser){
 
-        this.nodeList = leser.nodeList;
+        this.nodeList = (ArrayList<Node>) leser.nodeList.clone();
     }
 
     public String run(int startNodeName, int targetNodeName){
@@ -63,7 +63,7 @@ public class Astar {
                     res += no.name + " | " +  (no.ancestor != null ? no.ancestor.name : "§") + " | " + no.dist + "\n";
                 }
                 res += "antall noder tatt ut av køen: " + teller;
-                return res;
+                return res + "\nkortest distanse = " + n.dist;
             }
         }
 
