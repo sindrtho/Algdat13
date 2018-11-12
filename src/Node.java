@@ -7,6 +7,8 @@ public class Node {
     public ArrayList<Edge> edgeList = new ArrayList<>();
     public Node ancestor = null;
     public int dist = -1;
+    public boolean visited = false;
+    public double cost;
 
     public Node(String name){
         this.name = name;

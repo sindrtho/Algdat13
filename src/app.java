@@ -4,9 +4,12 @@ public class app {
         new ListeUtskriver<Node>().utskrift("", leser.nodeList, true);
         new ListeUtskriver<Edge>().utskrift("", leser.edgeList, true);
 
-        Dijkstra dijkstra = new Dijkstra(leser);
+        //Dijkstra dijkstra = new Dijkstra(leser);
         //dijkstra.run(0);
 
         //A* here
+        Astar astar = new Astar(leser);
+        System.out.println(astar.run(0, 2));
+
     }
 }
