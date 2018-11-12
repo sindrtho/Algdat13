@@ -1,18 +1,27 @@
 import java.util.ArrayList;
 public class Node {
     public String name;
+    public double lat;
+    public double lon;
+
     public ArrayList<Edge> edgeList = new ArrayList<>();
     public Node ancestor = null;
     public int dist = -1;
+
     public Node(String name){
         this.name = name;
+    }
+    public Node(String name, String lat, String lon){
+        this.name = name;
+        this.lat = Double.parseDouble(lat);
+        this.lon = Double.parseDouble(lon);
     }
 
     @Override
     public String toString() {
-        String res = name + "(" + dist + "): ";
+        String res = name + "(" + lat + "/" + lon + ")(" + dist + "); ";
         for(Edge e : edgeList){
-            res += e.toString() + ", ";
+            res += e.toString() + " | ";
         }
         return res;
     }

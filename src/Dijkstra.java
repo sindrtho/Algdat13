@@ -24,7 +24,7 @@ public class Dijkstra {
                         if(!prio.contains(e.endNode)){
                             prio.add(e.endNode);
                         }
-                        int newDist = n.dist + e.weight;
+                        int newDist = n.dist + e.time;
                         if (newDist < e.endNode.dist || e.endNode.dist == -1) {
                             e.endNode.dist = newDist;
                             e.endNode.ancestor = n;

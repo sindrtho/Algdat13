@@ -1,16 +1,22 @@
 public class Edge{
-    public int weight;
+    public int time;
+    public int length;
+    public int speedLimit;
+
     public Node startNode;
     public Node endNode;
-    public Edge(Node startNode, Node endNode, int weight){
-        this.weight = weight;
+    public Edge(Node startNode, Node endNode, int time, int length, int speedLimit){
+        this.time = time;
+        this.length = length;
+        this.speedLimit = speedLimit;
+
         this.startNode = startNode;
         this.endNode = endNode;
     }
 
     @Override
     public String toString() {
-        String res = startNode.name + " - " + endNode.name + ": " + weight;
+        String res = startNode.name + " - " + endNode.name + ": " + time + "/" + length + "/" + speedLimit;
         return res;
     }
     @Override
