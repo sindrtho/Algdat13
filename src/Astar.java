@@ -63,7 +63,14 @@ public class Astar {
                     res += no.name + " | " +  (no.ancestor != null ? no.ancestor.name : "§") + " | " + no.dist + "\n";
                 }
                 res += "antall noder tatt ut av køen: " + teller;
-                return res + "\nkortest distanse = " + n.dist;
+                res += "\nkortest distanse = " + n.dist;
+                res += "\n Breddegrader og Lengdegrader for korteste vei til kartet: ";
+                for(Node no : nodeList){
+                    if(no.dist >= 0) {
+                        res += "\n" + no.lat + "," + no.lon + "," + no.name + ", #FF0000";
+                    }
+                }
+                return res;
             }
         }
 
