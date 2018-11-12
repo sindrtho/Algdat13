@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-public class Node {
+public class Node implements Comparable<Node>{
     public String name;
     public double lat;
     public double lon;
@@ -35,5 +35,16 @@ public class Node {
         }
         Node n = (Node) o;
         return n.name.equals(this.name);
+    }
+
+    @Override
+    public int compareTo(Node node) {
+        if(node == this || node.name.equals(this.name)){
+            return 0;
+        }
+        else if(node.dist < this.dist){
+            return 1;
+        }
+        return 0;
     }
 }
