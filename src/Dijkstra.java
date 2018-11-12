@@ -1,3 +1,5 @@
+import com.sun.org.apache.xpath.internal.SourceTree;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -7,6 +9,7 @@ public class Dijkstra {
     public Dijkstra(Grafleser leser){
         this.nodeList = leser.nodeList;
     }
+    int teller = 0;
 
     public void run(int startNode){
         ArrayList<Node> prio = new ArrayList<>(); //Bedre prio-kø: Heap
@@ -34,6 +37,7 @@ public class Dijkstra {
                 visited.add(n);
             }
             prio.remove(n);
+            teller++;
         }
 
         Node node = nodeList.get(startNode);
@@ -42,6 +46,7 @@ public class Dijkstra {
         for(Node n : nodeList){
             System.out.println(n.name + " | " +  (n.ancestor != null ? n.ancestor.name : "§") + " | " + n.dist);
         }
+        System.out.println("Antall noder tatt ut av køen: " + teller);
     }
 
     void sortNodeList(ArrayList<Node> liste){
