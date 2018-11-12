@@ -1,12 +1,10 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.lang.reflect.Array;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class Dijkstra {
     public static void main(String[] args) {
-        String filnavn = "testfile";
+        String filnavn = "testfile_nodes";
         Dijkstra dijkstra = new Dijkstra(filnavn);
         dijkstra.run(0);
     }
