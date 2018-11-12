@@ -3,56 +3,9 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class Dijkstra {
-    public static void main(String[] args) {
-        String filnavn = "testfile_nodes";
-        Dijkstra dijkstra = new Dijkstra(filnavn);
-        dijkstra.run(0);
-    }
-
     ArrayList<Node> nodeList = new ArrayList<>();
-    public Dijkstra(String filnavn){
-        try{
-            BufferedReader br = new BufferedReader(new FileReader(filnavn));
-            String line = br.readLine(); //Første er antNoder, antKanter
-            String[] splut = line.split(" ");
-            int nodeAntall = Integer.parseInt(splut[0]);
-            int kantAntall = Integer.parseInt(splut[1]);
-
-            line = br.readLine();
-            while (line != null){
-                //nodeListe.add(new Node(i);
-                //System.out.println(line);
-                String[] split = line.trim().split(" ");
-                Node startNode = new Node(split[0]);
-                Node endNode = new Node(split[1]);
-
-                //Sjekker om noder finnes el. ikke
-                int startIndex = nodeList.indexOf(startNode);
-                if(startIndex < 0){
-                    nodeList.add(startNode);
-                }
-                else{
-                    startNode = nodeList.get(startIndex);
-                }
-
-                int endIndex = nodeList.indexOf(endNode);
-                if(endIndex < 0){
-                    nodeList.add(endNode);
-                }
-                else{
-                    endNode = nodeList.get(endIndex);
-                }
-
-                Edge edge = new Edge(startNode, endNode, Integer.parseInt(split[2]));
-                startNode.edgeList.add(edge);
-
-                line = br.readLine();
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            return;
-        }
-        new ListeUtskriver<Node>().utskrift("***NodeList***\n", nodeList, true);
+    public Dijkstra(Grafleser leser){
+        this.nodeList = leser.nodeList;
     }
 
     public void run(int startNode){
@@ -103,7 +56,7 @@ public class Dijkstra {
         }
     }
 
-    private ArrayList<Node> sortNodeListByNumber(ArrayList<Node> list){
+    protected ArrayList<Node> sortNodeListByNumber(ArrayList<Node> list){
         ArrayList<Node> sort = new ArrayList<>();
         Node min = null;
         while(list.size() > 0){
@@ -120,81 +73,5 @@ public class Dijkstra {
             min = null;
         }
         return sort;
-    }
-
-    private class Node{
-        public String name;
-        public ArrayList<Edge> edgeList = new ArrayList<>();
-        public Node ancestor = null;
-        public int dist = -1;
-        public Node(String name){
-            this.name = name;
-        }
-
-        @Override
-        public String toString() {
-            String res = name + "(" + dist + "): ";
-            for(Edge e : edgeList){
-                res += e.toString() + ", ";
-            }
-            return res;
-        }
-        @Override
-        public boolean equals(Object o) {
-            if(o == this){
-                return true;
-            }
-            if(!o.getClass().equals(this.getClass())){
-                return false;
-            }
-            Node n = (Node) o;
-            return n.name.equals(this.name);
-        }
-    }
-
-    private class Edge{
-        public int weight;
-        public Node startNode;
-        public Node endNode;
-        public Edge(Node startNode, Node endNode, int weight){
-            this.weight = weight;
-            this.startNode = startNode;
-            this.endNode = endNode;
-        }
-
-        @Override
-        public String toString() {
-            String res = startNode.name + " - " + endNode.name + ": " + weight;
-            return res;
-        }
-        @Override
-        public boolean equals(Object o) {
-            if(o == this){
-                return true;
-            }
-            if(!o.getClass().equals(this.getClass())){
-                return false;
-            }
-            Edge n = (Edge) o;
-            return n.startNode.equals(this.startNode) && n.endNode.equals(this.startNode);
-        }
-    }
-
-    private class ListeUtskriver<T>{
-        public void utskrift(String msg, ArrayList<T> liste, boolean newLine){
-            String res = msg;
-            if(newLine){
-                for(int i = 0; i < liste.size(); i++){
-                    res += liste.get(i).toString() + "\n";
-                }
-                System.out.println(res);
-            }
-            else{
-                for(int i = 0; i < liste.size(); i++){
-                    res += liste.get(i).toString() + ", ";
-                }
-                System.out.println(res + "\n");
-            }
-        }
     }
 }
