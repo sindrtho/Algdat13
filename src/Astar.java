@@ -5,6 +5,7 @@ public class Astar {
     ArrayList<Node> nodeList = new ArrayList<>();
     ArrayList<Edge> edgelist = new ArrayList<>();
     ArrayList<Node> prio = new ArrayList<>();
+    int teller = 0;
 
     final int r = 6371; //km;
 
@@ -53,6 +54,7 @@ public class Astar {
                 n.visited = true; //lagrer at noden har blitt besøkt
             }
             prio.remove(n); //Er nå ferdig med noden og den tas ut av køen
+            teller++;
 
             if(n == targetNode){ //Hvis denne noden er målnoden stoppes søket og en string av pathen returneres
                 nodeList = sortNodeListByNumber(nodeList);
@@ -60,6 +62,7 @@ public class Astar {
                 for(Node no : nodeList){
                     res += no.name + " | " +  (no.ancestor != null ? no.ancestor.name : "§") + " | " + no.dist + "\n";
                 }
+                res += "antall noder tatt ut av køen: " + teller;
                 return res;
             }
         }
