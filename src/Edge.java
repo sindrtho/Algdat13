@@ -5,10 +5,10 @@ public class Edge{
 
     public Node startNode;
     public Node endNode;
-    public Edge(Node startNode, Node endNode, int time, int length, int speedLimit){
+    public Edge(Node startNode, Node endNode, int time) { //, int length, int speedLimit){
         this.time = time;
-        this.length = length;
-        this.speedLimit = speedLimit;
+//        this.length = length;
+//        this.speedLimit = speedLimit;
 
         this.startNode = startNode;
         this.endNode = endNode;
@@ -16,7 +16,7 @@ public class Edge{
 
     @Override
     public String toString() {
-        String res = startNode.name + " - " + endNode.name + ": " + time + "/" + length + "/" + speedLimit;
+        String res = startNode.name + " - " + endNode.name + ": " + time;// + "/" + length + "/" + speedLimit;
         return res;
     }
     @Override

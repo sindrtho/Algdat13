@@ -10,84 +10,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.StringTokenizer;
 
 public class Grafleser {
-    public ArrayList<Node> nodeList = new ArrayList<>();
-    public ArrayList<Edge> edgeList = new ArrayList<>();
+
+    public ArrayList<Node> nodes;
+    public ArrayList<Edge> edges;
 
     public Grafleser(String nodefile, String edgefile){
-        /*
-        try (
-            RandomAccessFile aFile = new RandomAccessFile(nodefile, "r");
-            FileChannel inChannel = aFile.getChannel();
-        )
-        {
-            ArrayList<Node> nodr = new ArrayList<>();
-            Long startTime = System.currentTimeMillis();
-
-            ByteBuffer bb = ByteBuffer.allocateDirect(7);
-            inChannel.read(bb);
-            bb.flip();
-            String count = "";
-            for (int i = 0; i < bb.limit(); i++) {
-                //System.out.print((char) bb.get());
-                char v = (char) bb.get();
-                if(v != '\n' && v != '\r'){
-                    count += v;
-                }
-            }
-            bb.clear();
-            System.out.println(count);
-
-            bb = ByteBuffer.allocateDirect(25);
-            int currentNode = 0;
-            while(inChannel.read(bb) > 0){
-                bb.flip();
-                String num = "";
-                String lat = "";
-                String lon = "";
-                int index = 0;
-                for (int i = 0; i < bb.limit(); i++)
-                {
-                    System.out.print((char) bb.get());
-                    char v = (char) bb.get();
-                    if(v == ' '){
-                        //new val
-                        if(i > 0){
-                            index++;
-                        }
-                    }
-                    else if(v != '\n' && v != '\r'){
-                        switch (index){
-                            case 0:
-                                num += v;
-                                break;
-                            case 1:
-                                lat += v;
-                                break;
-                            case 2:
-                                lon += v;
-                                break;
-                        }
-                    }
-                    else{
-                        if(!num.equals("") && !lat.equals("") && !lon.equals("")){
-                            System.out.println(currentNode + ": " + num + "/" + lat + "/" + lon);
-                            nodr.add(new Node(num, lat, lon));
-                            currentNode++;
-                            num = "";
-                            lat = "";
-                            lon = "";
-                        }
-                    }
-                }
-                bb.clear(); // do something with the data and clear/compact it.
-            }
-            System.out.println();
-            System.out.println("Time-to-Nodes(0): " + ((System.currentTimeMillis() - startTime)/1000.0) + "s");
-        }catch(Exception e){
-            e.printStackTrace();
-        }*/
 
         try(
             BufferedReader nodeBr = new BufferedReader(new FileReader(nodefile));
@@ -96,39 +26,61 @@ public class Grafleser {
         {
             Long startTime = System.currentTimeMillis();
 
-            String line = null;
-            line = nodeBr.readLine().trim();
-            int nodeCount = Integer.parseInt(line);
-            line = edgeBr.readLine().trim();
-            int edgeCount = Integer.parseInt(line);
+            StringTokenizer st = new StringTokenizer(nodeBr.readLine());
+            int nodeCount = Integer.parseInt(st.nextToken());   //Number of total nodes in the grid.
 
-            line = nodeBr.readLine();
-            while (line != null){
-                //System.out.println(line);
-                String[] split = line.trim().split(" ");
-                Node node = new Node(split[0], split[1], split[2]); //nr, kord1, kord2
-                nodeList.add(node);
+            st = new StringTokenizer(edgeBr.readLine());
+            int edgeCount = Integer.parseInt(st.nextToken());   //Number of total edges between nodes.
 
-                line = nodeBr.readLine();
+            nodes = new ArrayList<>();
+            edges = new ArrayList<>();
+
+            Long startReadingNodes = System.currentTimeMillis();
+
+            //Add all nodes from the file to a ArrayList<Node>.
+            for(int i = 0; i < nodeCount; i++) {
+                st = new StringTokenizer(nodeBr.readLine());
+                nodes.add(new Node(st.nextToken(), st.nextToken(), st.nextToken()));
             }
-            System.out.println("Time-to-Nodes: " + ((System.currentTimeMillis() - startTime)/1000.0) + "s");
-            line = edgeBr.readLine();
-            while (line != null){
-                //System.out.println(line);
-                String[] split = line.trim().split(" "); //from, to, time, length, speedlimit
-                Node start = nodeList.get(nodeList.indexOf(new Node(split[0])));
-                Node end = nodeList.get(nodeList.indexOf(new Node(split[1])));
 
-                Edge edge = new Edge(start, end, Integer.parseInt(split[2]), Integer.parseInt(split[3]), Integer.parseInt(split[4]));
-                edgeList.add(edge);
-                start.edgeList.add(edge);
+            Long nodeReadEnd = System.currentTimeMillis();
 
-                line = edgeBr.readLine();
+            System.out.println("Time to read Nodes: " + ((nodeReadEnd - startReadingNodes)/1000.0) + "sec");
+
+            Long startReadingEdges = System.currentTimeMillis();
+
+            //Add all edges from file to a ArrayList<Edge> as well as adding all the edges to their start node edge list.
+            for(int i = 0; i < edgeCount; i++) {
+                st = new StringTokenizer(edgeBr.readLine());
+                Node start = nodes.get(Integer.parseInt(st.nextToken()));
+                Node next = nodes.get(Integer.parseInt(st.nextToken()));
+                Edge newEdge = new Edge(start, next, Integer.parseInt(st.nextToken()));
+                edges.add(newEdge);
+                start.edgeList.add(newEdge);
             }
+
+            Long endOfReadingEdges = System.currentTimeMillis();
 
             Long endTime = System.currentTimeMillis();
-            System.out.println("Timed-to-Read: " + ((endTime - startTime)/60000.0) + "min");
-        }catch (Exception e){
+
+            System.out.println("Time to Read Edges: " + (endOfReadingEdges - startReadingEdges)/1000 + "sec");
+            System.out.println("Time to Read Everything: " + ((endTime - startTime)/1000) + "sec");
+
+            System.out.println("\nNumber of nodes: " + nodes.size());
+            System.out.println("\nNumber of edges: " + edges.size());
+
+            if(nodes.size() < 1000) {
+                System.out.println("\nNodes: ");
+                for(Node n : nodes)
+                    System.out.println(n);
+            }
+            if(edges.size() < 1000) {
+                System.out.println("\nEdges: ");
+                for(Edge e : edges)
+                    System.out.println(e);
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
             return;
         }

@@ -11,7 +11,8 @@ public class Astar {
 
     public Astar(Grafleser leser){
 
-        this.nodeList = (ArrayList<Node>) leser.nodeList.clone();
+        this.nodeList = (ArrayList<Node>) leser.nodes.clone();
+//        this.nodeList = (ArrayList<Node>) leser.nodeList.clone();
     }
 
     public String run(int startNodeName, int targetNodeName){
@@ -58,10 +59,10 @@ public class Astar {
 
             if(n == targetNode){ //Hvis denne noden er målnoden stoppes søket og en string av pathen returneres
                 nodeList = sortNodeListByNumber(nodeList);
-                String res = "N: Node, A: Ancestor, L: minLength\nStartNode: " + startNode.name + "\nN | A | L\n";
-                for(Node no : nodeList){
-                    res += no.name + " | " +  (no.ancestor != null ? no.ancestor.name : "§") + " | " + no.dist + "\n";
-                }
+                String res = ""; //"N: Node, A: Ancestor, L: minLength\nStartNode: " + startNode.name + "\nN | A | L\n";
+//                for(Node no : nodeList){
+//                    res += no.name + " | " +  (no.ancestor != null ? no.ancestor.name : "§") + " | " + no.dist + "\n";
+//                }
                 res += "antall noder tatt ut av køen: " + teller;
                 res += "\nkortest distanse = " + n.dist;
                 res += "\n Breddegrader og Lengdegrader for korteste vei til kartet: ";

@@ -8,7 +8,8 @@ import java.util.Collections;
 public class Dijkstra {
     ArrayList<Node> nodeList = new ArrayList<>();
     public Dijkstra(Grafleser leser){
-        this.nodeList = (ArrayList<Node>) leser.nodeList.clone();
+        this.nodeList = (ArrayList<Node>) leser.nodes.clone();
+//         this.nodeList = (ArrayList<Node>) leser.nodeList.clone();
     }
     int teller = 0;
 
@@ -22,9 +23,9 @@ public class Dijkstra {
         while(prio.size() > 0){
             Collections.sort(prio);
             Node n = prio.get(0); //Den øverste
-            if(!visited.contains(n)){ //if it's not been visited before
+            if(!n.visited){ //if it's not been visited before
                 for(Edge e : n.edgeList){ //Legge inn ny distanse hvis det er kortere enn det de er allerede
-                    if(!visited.contains(e.endNode)) {
+                    if(!e.endNode.visited) {
                         if(!prio.contains(e.endNode)){
                             prio.add(e.endNode);
                         }
@@ -35,18 +36,18 @@ public class Dijkstra {
                         }
                     }
                 }
-                visited.add(n);
+                n.visited = true;
             }
             prio.remove(n);
             teller++;
         }
 
-        Node node = nodeList.get(startIndex);
+//        Node node = nodeList.get(startIndex);
         nodeList = sortNodeListByNumber(nodeList);
-        String res = "N: Node, A: Ancestor, L: minLength\nStartNode: " + node.name + "\nN | A | L\n";
-        for(Node n : nodeList){
-            res += n.name + " | " +  (n.ancestor != null ? n.ancestor.name : "§") + " | " + n.dist + "\n";
-        }
+        String res = ""; //"N: Node, A: Ancestor, L: minLength\nStartNode: " + node.name + "\nN | A | L\n";
+//        for(Node n : nodeList){
+//            res += n.name + " | " +  (n.ancestor != null ? n.ancestor.name : "§") + " | " + n.dist + "\n";
+//        }
         res += "Antall noder tatt ut av køen: " + teller;
         Node endNode = nodeList.get(endIndex);
         return res + "\nkortest distanse = " + endNode.dist;
