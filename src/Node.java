@@ -3,10 +3,11 @@ public class Node implements Comparable<Node>{
     public String name;
     public double lat;
     public double lon;
+    final int MAX_INTEGER = Integer.MAX_VALUE;
 
     public ArrayList<Edge> edgeList = new ArrayList<>();
     public Node ancestor = null;
-    public int dist = -1;
+    public int dist = MAX_INTEGER;
     public boolean visited = false;
     public double cost;
 

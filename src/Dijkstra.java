@@ -4,9 +4,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 public class Dijkstra {
     ArrayList<Node> nodeList = new ArrayList<>();
+
+
     public Dijkstra(Grafleser leser){
         this.nodeList = (ArrayList<Node>) leser.nodes.clone();
 //         this.nodeList = (ArrayList<Node>) leser.nodeList.clone();
@@ -14,23 +18,30 @@ public class Dijkstra {
     int teller = 0;
 
     public String run(int startIndex, int endIndex){
-        ArrayList<Node> prio = new ArrayList<>(); //Bedre prio-kø: Heap
+//        ArrayList<Node> prio = new ArrayList<>(); //Bedre prio-kø: Heap
+        PriorityQueue<Node> queue = new PriorityQueue(new MyComparator());
         Node start = nodeList.get(startIndex);
+        Node end = nodeList.get(endIndex);
         start.dist = 0;
-        prio.add(start);
+//        prio.add(start);
+        queue.add(start);
 
-        ArrayList<Node> visited = new ArrayList<>();
-        while(prio.size() > 0){
-            Collections.sort(prio);
-            Node n = prio.get(0); //Den øverste
+
+        while(!queue.isEmpty()){
+            //Collections.sort(prio);
+            Node n = queue.poll(); //Den øverste
+            if(n.equals(end)){
+                break;
+            }
             if(!n.visited){ //if it's not been visited before
                 for(Edge e : n.edgeList){ //Legge inn ny distanse hvis det er kortere enn det de er allerede
                     if(!e.endNode.visited) {
-                        if(!prio.contains(e.endNode)){
-                            prio.add(e.endNode);
+                        if(!queue.contains(e.endNode)){
+                            queue.add(e.endNode);
                         }
                         int newDist = n.dist + e.time;
                         if (newDist < e.endNode.dist || e.endNode.dist == -1) {
+                            queue.add(e.endNode);
                             e.endNode.dist = newDist;
                             e.endNode.ancestor = n;
                         }
@@ -38,19 +49,26 @@ public class Dijkstra {
                 }
                 n.visited = true;
             }
-            prio.remove(n);
+
             teller++;
         }
 
 //        Node node = nodeList.get(startIndex);
-        nodeList = sortNodeListByNumber(nodeList);
+//        nodeList = sortNodeListByNumber(nodeList);
         String res = ""; //"N: Node, A: Ancestor, L: minLength\nStartNode: " + node.name + "\nN | A | L\n";
 //        for(Node n : nodeList){
 //            res += n.name + " | " +  (n.ancestor != null ? n.ancestor.name : "§") + " | " + n.dist + "\n";
 //        }
         res += "Antall noder tatt ut av køen: " + teller;
-        Node endNode = nodeList.get(endIndex);
-        return res + "\nkortest distanse = " + endNode.dist;
+        Node next = end;
+        res += "\nkortest distanse = " + next.dist;
+        while(next !=null){
+            res += "\n" + next.lat + "," + next.lon + "," + next.name + ", #FF0000";
+            next = next.ancestor;
+        }
+
+
+        return res;
     }
 
     protected ArrayList<Node> sortNodeListByNumber(ArrayList<Node> list){
@@ -71,4 +89,12 @@ public class Dijkstra {
         }
         return sort;
     }
+
+    class MyComparator implements Comparator<Node> {
+        @Override
+        public int compare(Node o1, Node o2) {
+            return o1.dist - o2.dist;
+        }
+    }
+
 }
