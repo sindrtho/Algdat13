@@ -67,9 +67,9 @@ public class Astar {
                 res += "\nkortest distanse = " + n.dist;
                 res += "\n Breddegrader og Lengdegrader for korteste vei til kartet: ";
                 for(Node no : nodeList){
-                    if(no.dist >= 0) {
-                        res += "\n" + no.lat + "," + no.lon + "," + no.name + ", #FF0000";
-                    }
+                    res += "\n" + no.lat + "," + no.lon + "," + no.name + ", #FF0000";
+                    if(no == targetNode)
+                        break;
                 }
                 return res;
             }
