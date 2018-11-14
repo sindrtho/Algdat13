@@ -1,4 +1,5 @@
-public class app {
+public class
+app {
     public static void main(String[] args) {
 //        Grafleser leserDijkstra = new Grafleser("src/testfile_nodes.txt", "src/testfile_edges.txt");
 //        Grafleser leserAstar = new Grafleser("src/testfile_nodes.txt", "src/testfile_edges.txt");
@@ -14,12 +15,12 @@ public class app {
         System.out.println(resD);
         System.out.println("Dijkstra: " + (endDijkstra - startDijkstra)/1000 + "Sec");
 
-        System.out.println("\nA-STAR:");
-        Long startAstar = System.currentTimeMillis();
-        Astar astar = new Astar(leserAstar);
-        String resA = astar.run(0, 1);
-        Long endAstar = System.currentTimeMillis();
-        System.out.println(resA);
-        System.out.println("Astar: " + (endAstar - startAstar)/1000 + "Sec");
+//        System.out.println("\nA-STAR:");
+//        Long startAstar = System.currentTimeMillis();
+//        Astar astar = new Astar(leserAstar);
+//        String resA = astar.run(0, 1);
+//        Long endAstar = System.currentTimeMillis();
+//        System.out.println(resA);
+//        System.out.println("Astar: " + (endAstar - startAstar)/1000 + "Sec");
     }
 }
