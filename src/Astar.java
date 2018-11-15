@@ -36,8 +36,12 @@ public class Astar {
                     for (Edge e : n.edgeList) { //Legge inn ny distanse hvis det er kortere enn det de er allerede
 
                         if (!e.endNode.visited) {
+
+                            priQue.add(e.endNode);
+
                             int newDist = n.dist + e.time;
                             if (newDist < e.endNode.dist || e.endNode.dist == -1) {
+                                priQue.remove(e.endNode);
                                 e.endNode.dist = newDist;
                                 e.endNode.ancestor = n;
                                 priQue.add(e.endNode);
