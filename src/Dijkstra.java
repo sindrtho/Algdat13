@@ -41,9 +41,9 @@ public class Dijkstra {
                         }
                         int newDist = n.dist + e.time;
                         if (newDist < e.endNode.dist || e.endNode.dist == -1) {
-                            queue.add(e.endNode);
-                            e.endNode.dist = newDist;
+                            e.endNode.dist = newDist;       //Burde ny distanse settes før man legger inn i kø???
                             e.endNode.ancestor = n;
+                            queue.add(e.endNode);
                         }
                     }
                 }
