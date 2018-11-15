@@ -41,9 +41,9 @@ public class Dijkstra {
                         }
                         int newDist = n.dist + e.time;
                         if (newDist < e.endNode.dist || e.endNode.dist == -1) {
-                            queue.add(e.endNode);
-                            e.endNode.dist = newDist;
+                            e.endNode.dist = newDist;       //Burde ny distanse settes før man legger inn i kø???
                             e.endNode.ancestor = n;
+                            queue.add(e.endNode);
                         }
                     }
                 }
@@ -53,13 +53,8 @@ public class Dijkstra {
             teller++;
         }
 
-//        Node node = nodeList.get(startIndex);
-//        nodeList = sortNodeListByNumber(nodeList);
-        String res = ""; //"N: Node, A: Ancestor, L: minLength\nStartNode: " + node.name + "\nN | A | L\n";
-//        for(Node n : nodeList){
-//            res += n.name + " | " +  (n.ancestor != null ? n.ancestor.name : "§") + " | " + n.dist + "\n";
-//        }
-        res += "Antall noder tatt ut av køen: " + teller;
+
+        String res = "Antall noder tatt ut av køen: " + teller;
         Node next = end;
         res += "\nkortest distanse = " + next.dist;
         while(next !=null){
