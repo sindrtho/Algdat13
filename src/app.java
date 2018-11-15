@@ -6,9 +6,10 @@ app {
 //        Grafleser leserDijkstra = new Grafleser("src/testfile_nodes.txt", "src/testfile_edges.txt");
 //        Grafleser leserAstar = new Grafleser("src/testfile_nodes.txt", "src/testfile_edges.txt");
 
+//        Grafleser leserDijkstra = new Grafleser("src/filer/albania-noder.txt", "src/filer/albania-kanter.txt");
+//        Grafleser leserAstar = new Grafleser("src/filer/albania-noder.txt", "src/filer/albania-kanter.txt");
         Grafleser leserDijkstra = new Grafleser("src/filer/noder.txt", "src/filer/kanter.txt");
-        Grafleser leserAstar = new Grafleser("src/filer/albania-noder.txt", "src/filer/albania-kanter.txt");
-
+//        Grafleser leserAstar = new Grafleser("src/filer/noder.txt", "src/filer/kanter.txt");
 //        new ListeUtskriver<Node>().utskrift("", leser.nodeList, true);
 //        new ListeUtskriver<Edge>().utskrift("", leser.edgeList, true);
 
