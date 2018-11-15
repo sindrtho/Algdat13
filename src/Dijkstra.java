@@ -8,11 +8,11 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class Dijkstra {
-    ArrayList<Node> nodeList = new ArrayList<>();
+    ArrayList<Node> nodeList;
 
 
     public Dijkstra(Grafleser leser){
-        this.nodeList = (ArrayList<Node>) leser.nodes.clone();
+        this.nodeList = leser.nodes;
 //         this.nodeList = (ArrayList<Node>) leser.nodeList.clone();
     }
     int teller = 0;

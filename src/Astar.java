@@ -3,7 +3,7 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class Astar {
-    ArrayList<Node> nodeList = new ArrayList<>();
+    ArrayList<Node> nodeList;
     PriorityQueue<Node> priQue;
     int teller = 0;
 
@@ -11,7 +11,7 @@ public class Astar {
 
     public Astar(Grafleser leser){
 
-        this.nodeList = (ArrayList<Node>) leser.nodes.clone();
+        this.nodeList = leser.nodes;
     }
 
     public String run(int startNodeName, int targetNodeName){
