@@ -11,6 +11,8 @@ public class Node implements Comparable<Node>{
     public boolean visited = false;
     public double cost;
 
+    public double cosLon;
+
     public Node(String name){
         this.name = name;
     }
@@ -18,6 +20,7 @@ public class Node implements Comparable<Node>{
         this.name = name;
         this.lat = Double.parseDouble(lat);
         this.lon = Double.parseDouble(lon);
+        cosLon = Math.cos(this.lon);
     }
 
     @Override
@@ -49,5 +52,13 @@ public class Node implements Comparable<Node>{
             return 1;
         }
         return 0;
+    }
+
+    public static void printTime(int centiSec) {
+        String base = "Korteste rute tar: ";
+        int timer = (int)(((double)centiSec)/360000);
+        int min = (int)((((double)centiSec)%360000)/6000);
+        int sec = (int)(((((double)centiSec)%360000)%6000)/100);
+        System.out.println(base + timer + " timer, " + min + " minutter, og " + sec + " sekunder.");
     }
 }

@@ -23,9 +23,10 @@ public class Dijkstra {
         Node start = nodeList.get(startIndex);
         Node end = nodeList.get(endIndex);
         start.dist = 0;
-//        prio.add(start);
+
         queue.add(start);
 
+        Long startTime = System.currentTimeMillis();
 
         while(!queue.isEmpty()){
             //Collections.sort(prio);
@@ -53,16 +54,19 @@ public class Dijkstra {
             teller++;
         }
 
+        Long endTime = System.currentTimeMillis();
+
+        System.out.println("Kjøretid Dijkstra: " + (endTime - startTime)/1000 + "sek");
 
         String res = "Antall noder tatt ut av køen: " + teller;
         Node next = end;
-        res += "\nkortest distanse = " + next.dist;
+        int dist = end.dist;
         while(next !=null){
             res += "\n" + next.lat + "," + next.lon + "," + next.name + ", #FF0000";
             next = next.ancestor;
         }
 
-
+        Node.printTime(dist);
         return res;
     }
 

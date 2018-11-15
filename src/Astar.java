@@ -25,6 +25,8 @@ public class Astar {
 
         priQue.add(startNode);
 
+        Long start = System.currentTimeMillis();
+
         //Går igjennom prioritetskøen
         while(!priQue.isEmpty()){
             Node n = priQue.poll(); //Den øverste
@@ -47,14 +49,20 @@ public class Astar {
                     n.visited = true; //lagrer at noden har blitt besøkt
                 }
             } else { //Hvis denne noden er målnoden stoppes søket og en string av pathen returneres
+
+                Long end = System.currentTimeMillis();
+                System.out.println("Kjøretid A-star: " + (end - start)/1000 + "sek");
+
                 String res = ""; //"N: Node, A: Ancestor, L: minLength\nStartNode: " + startNode.name + "\nN | A | L\n";
                 res += "antall noder tatt ut av køen: " + teller;
-                res += "\nkortest distanse = " + n.dist;
+                int dist = n.dist;
                 res += "\n Breddegrader og Lengdegrader for korteste vei til kartet: ";
                 while(n != null) {
                     res += "\n" + n.lat + "," + n.lon + "," + n.name + ", #FF0000";
                     n = n.ancestor;
                 }
+
+                Node.printTime(dist);
                 return res;
             }
         }
@@ -128,15 +136,20 @@ public class Astar {
             int initcost2 = n2.dist;
             double cost1 = 2 * r * Math.asin(
                     Math.sqrt(Math.pow(Math.sin((n1.lon - goal.lon)/2), 2)
-                            + Math.cos(n1.lon) * Math.cos(goal.lon)
+                            + n1.cosLon * goal.cosLon
                             * Math.pow(Math.sin((n1.lat - goal.lat)/2), 2)));
 
             double cost2 = 2 * r * Math.asin(
                     Math.sqrt(Math.pow(Math.sin((n2.lon - goal.lon)/2), 2)
-                            + Math.cos(n2.lon) * Math.cos(goal.lon)
+                            + n2.cosLon * goal.cosLon
                             * Math.pow(Math.sin((n2.lat - goal.lat)/2), 2)));
 
             return (int)Math.floor(cost1 + initcost1 + 0.5) - (int)Math.floor(cost2 + initcost2 + 0.5);
         }
     }
 }
+
+
+/**
+ Regn ut cosinus av breddegradene ved innlesing. Dette kan spare tid!
+ */
