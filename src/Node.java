@@ -11,7 +11,10 @@ public class Node implements Comparable<Node>{
     public boolean visited = false;
     public double cost;
 
-    public double cosLon;
+    public double radLat;
+    public double radLon;
+
+    public double haversine;
 
     public Node(String name){
         this.name = name;
@@ -20,7 +23,23 @@ public class Node implements Comparable<Node>{
         this.name = name;
         this.lat = Double.parseDouble(lat);
         this.lon = Double.parseDouble(lon);
-        cosLon = Math.cos(this.lon);
+        radLat = 180/Math.PI * this.lat;
+        radLon = 180/Math.PI * this.lon;
+    }
+
+    public double setHaversine(Node goal){
+        double cosLat = Math.cos(this.radLat);
+        double sinLats = Math.sin((radLat - goal.radLat)/2);
+        double sinLons = Math.sin((radLon - goal.radLon)/2);
+        haversine = 2 * Astar.r *
+                Math.asin(
+                    Math.sqrt(
+                        sinLats * sinLats
+                        + cosLat * Math.cos(goal.radLat)
+                        * sinLons * sinLons
+                    )
+                );
+        return haversine;
     }
 
     @Override

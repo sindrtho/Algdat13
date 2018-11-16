@@ -80,7 +80,6 @@ public class Grafleser {
                     for (Edge e : edges)
                         System.out.println(e);
                 }
-                System.out.println("yo");
             } catch (Exception e) {
                 e.printStackTrace();
                 return;
@@ -139,7 +138,6 @@ public class Grafleser {
                 System.out.println("\nNumber of nodes: " + nodes.size());
                 System.out.println("\nNumber of edges: " + edges.size());
 
-                /*
                 if (nodes.size() < 1000) {
                     System.out.println("\nNodes: ");
                     for (Node n : nodes)
@@ -149,8 +147,7 @@ public class Grafleser {
                     System.out.println("\nEdges: ");
                     for (Edge e : edges)
                         System.out.println(e);
-                }*/
-                System.out.println("yo");
+                }
             }catch (Exception e){
                 e.printStackTrace();
             }finally {

@@ -15,19 +15,18 @@ app {
 //        new ListeUtskriver<Node>().utskrift("", leser.nodeList, true);
 //        new ListeUtskriver<Edge>().utskrift("", leser.edgeList, true);
 
+
         Grafleser leserDijkstra = new Grafleser(false, "src/filer/skan-noder.txt", "src/filer/skan-kanter.txt");
         System.out.println("\nDIJKSTRA:");
-        Long startDijkstra = System.currentTimeMillis();
-        String resD = new Dijkstra(leserDijkstra).run(trondheim, bergen);
-        Long endDijkstra = System.currentTimeMillis();
+        String resD = new Dijkstra(leserDijkstra).run(trondheim, bergen, false);
         System.out.println(resD);
-        System.out.println("Dijkstra: " + (endDijkstra - startDijkstra)/1000 + "Sec");
+
 
         /*
         Grafleser leserAstar = new Grafleser(false, "src/filer/skan-noder.txt", "src/filer/skan-kanter.txt");
         System.out.println("\nA-STAR:");
         Astar astar = new Astar(leserAstar);
-        String resA = astar.run(5326, 64289);
-        //System.out.println(resA);*/
+        String resA = astar.run(trondheim, bergen, false);
+        System.out.println(resA);*/
     }
 }

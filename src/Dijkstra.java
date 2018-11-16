@@ -17,7 +17,7 @@ public class Dijkstra {
     }
     int teller = 0;
 
-    public String run(int startIndex, int endIndex){
+    public String run(int startIndex, int endIndex, boolean printCoords){
 //        ArrayList<Node> prio = new ArrayList<>(); //Bedre prio-kø: Heap
         PriorityQueue<Node> queue = new PriorityQueue(new MyComparator());
         Node start = nodeList.get(startIndex);
@@ -64,9 +64,11 @@ public class Dijkstra {
         String res = "Antall noder tatt ut av køen: " + teller;
         Node next = end;
         int dist = end.dist;
-        while(next !=null){
-            res += "\n" + next.lat + "," + next.lon + "," + next.name + ", #FF0000";
-            next = next.ancestor;
+        if(printCoords){
+            while(next !=null){
+                res += "\n" + next.lat + "," + next.lon + "," + next.name + ", #FF0000";
+                next = next.ancestor;
+            }
         }
 
         Node.printTime(dist);
