@@ -25,6 +25,7 @@ public class Dijkstra {
         start.dist = 0;
 
         queue.add(start);
+        start.visited = true;
 
         Long startTime = System.currentTimeMillis();
 
@@ -34,12 +35,15 @@ public class Dijkstra {
             if(n.equals(end)){
                 break;
             }
-            if(!n.visited){ //if it's not been visited before
+            //if(!n.visited){ //if it's not been visited before
                 for(Edge e : n.edgeList){ //Legge inn ny distanse hvis det er kortere enn det de er allerede
                     if(!e.endNode.visited) {
+                        /*
                         if(!queue.contains(e.endNode)){
                             queue.add(e.endNode);
-                        }
+                        }*/
+                        queue.add(e.endNode);
+                        e.endNode.visited = true;
                         int newDist = n.dist + e.time;
                         if (newDist < e.endNode.dist || e.endNode.dist == -1) {
                             e.endNode.dist = newDist;       //Burde ny distanse settes før man legger inn i kø???
@@ -47,8 +51,7 @@ public class Dijkstra {
                             queue.add(e.endNode);
                         }
                     }
-                }
-                n.visited = true;
+                //}
             }
 
             teller++;
