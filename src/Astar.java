@@ -35,9 +35,12 @@ public class Astar {
 
             if(n != targetNode) {
                 for (Edge e : n.edgeList) { //Legge inn ny distanse hvis det er kortere enn det de er allerede
+                    if(e.endNode.name.equals("2574762") && teller == 89085){
+                        System.out.println("props: " + teller);
+                    }
                     int newDist = n.dist + e.time;
                     if (newDist < e.endNode.dist) {
-                        e.endNode.dist = newDist;
+                        e.endNode.dist = newDist;       //Burde ny distanse settes før man legger inn i kø???
                         e.endNode.ancestor = n;
                     }
                     if (!e.endNode.visited) {
