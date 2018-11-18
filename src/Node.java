@@ -9,6 +9,7 @@ public class Node implements Comparable<Node>{
     public Node ancestor = null;
     public int dist = MAX_INTEGER;
     public boolean visited = false;
+    public boolean added = false;
     public double cost;
 
     public double radLat;
@@ -23,15 +24,15 @@ public class Node implements Comparable<Node>{
         this.name = name;
         this.lat = Double.parseDouble(lat);
         this.lon = Double.parseDouble(lon);
-        radLat = 180/Math.PI * this.lat;
-        radLon = 180/Math.PI * this.lon;
+        radLat = Math.PI/180 * this.lat;
+        radLon = Math.PI/180 * this.lon;
     }
 
     public double setHaversine(Node goal){
         double cosLat = Math.cos(this.radLat);
         double sinLats = Math.sin((radLat - goal.radLat)/2);
         double sinLons = Math.sin((radLon - goal.radLon)/2);
-        haversine = 2 * Astar.r *
+        haversine = 2 * Astar.r / 110 * 3600 * 100 *
                 Math.asin(
                     Math.sqrt(
                         sinLats * sinLats

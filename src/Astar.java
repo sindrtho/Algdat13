@@ -31,18 +31,21 @@ public class Astar {
         //Går igjennom prioritetskøen
         while(!priQue.isEmpty()){
             Node n = priQue.poll(); //Den øverste
-
             teller++;
+
             if(n != targetNode) {
                 for (Edge e : n.edgeList) { //Legge inn ny distanse hvis det er kortere enn det de er allerede
                     if (!e.endNode.visited) {
                         int newDist = n.dist + e.time;
-                        if (newDist < e.endNode.dist || e.endNode.dist == -1) {
+                        if (newDist < e.endNode.dist) {
                             e.endNode.dist = newDist;
                             e.endNode.ancestor = n;
+                        }
+                        if(!e.endNode.added){
                             e.endNode.setHaversine(targetNode);
                             priQue.add(e.endNode);
                             e.endNode.visited = true;
+                            e.endNode.added = true;
                         }
                     }
                 }
@@ -67,7 +70,7 @@ public class Astar {
             }
         }
 
-        return "Den fant ikke målnoden";
+        return "Antal noder tatt ut av køen:" + teller + "\nDen fant ikke målnoden";
     }
 
     class MyComp implements Comparator<Node> {

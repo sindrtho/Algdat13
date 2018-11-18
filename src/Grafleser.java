@@ -68,7 +68,7 @@ public class Grafleser {
                 System.out.println("Time to Read Everything: " + ((endTime - startTime) / 1000) + "sec");
 
                 System.out.println("\nNumber of nodes: " + nodes.size());
-                System.out.println("\nNumber of edges: " + edges.size());
+                System.out.println("Number of edges: " + edges.size());
 
                 if (nodes.size() < 1000) {
                     System.out.println("\nNodes: ");

@@ -25,36 +25,36 @@ public class Dijkstra {
         start.dist = 0;
 
         queue.add(start);
-        start.visited = true;
+        //start.visited = true;
 
         Long startTime = System.currentTimeMillis();
 
         while(!queue.isEmpty()){
             //Collections.sort(prio);
             Node n = queue.poll(); //Den øverste
+            teller++;
+
             if(n.equals(end)){
                 break;
             }
-            //if(!n.visited){ //if it's not been visited before
-                for(Edge e : n.edgeList){ //Legge inn ny distanse hvis det er kortere enn det de er allerede
-                    if(!e.endNode.visited) {
-                        /*
-                        if(!queue.contains(e.endNode)){
-                            queue.add(e.endNode);
-                        }*/
+            for(Edge e : n.edgeList){ //Legge inn ny distanse hvis det er kortere enn det de er allerede
+                if(!e.endNode.visited) {
+                    /*
+                    if(!queue.contains(e.endNode)){
                         queue.add(e.endNode);
-                        e.endNode.visited = true;
-                        int newDist = n.dist + e.time;
-                        if (newDist < e.endNode.dist || e.endNode.dist == -1) {
-                            e.endNode.dist = newDist;       //Burde ny distanse settes før man legger inn i kø???
-                            e.endNode.ancestor = n;
-                            queue.add(e.endNode);
-                        }
+                    }*/
+                    int newDist = n.dist + e.time;
+                    if (newDist < e.endNode.dist) {
+                        e.endNode.dist = newDist;       //Burde ny distanse settes før man legger inn i kø???
+                        e.endNode.ancestor = n;
                     }
-                //}
+                    if(!e.endNode.added){
+                        queue.add(e.endNode);
+                        e.endNode.added = true;
+                    }
+                }
             }
-
-            teller++;
+            n.visited = true;
         }
 
         Long endTime = System.currentTimeMillis();
@@ -64,8 +64,11 @@ public class Dijkstra {
         String res = "Antall noder tatt ut av køen: " + teller;
         Node next = end;
         int dist = end.dist;
+        if(next.ancestor == null){
+            res += "\nFant ikke målnoden";
+        }
         if(printCoords){
-            while(next !=null){
+            while(next != null){
                 res += "\n" + next.lat + "," + next.lon + "," + next.name + ", #FF0000";
                 next = next.ancestor;
             }
