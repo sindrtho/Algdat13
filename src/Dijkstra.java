@@ -38,16 +38,12 @@ public class Dijkstra {
                 break;
             }
             for(Edge e : n.edgeList){ //Legge inn ny distanse hvis det er kortere enn det de er allerede
+                int newDist = n.dist + e.time;
+                if (newDist < e.endNode.dist) {
+                    e.endNode.dist = newDist;       //Burde ny distanse settes før man legger inn i kø???
+                    e.endNode.ancestor = n;
+                }
                 if(!e.endNode.visited) {
-                    /*
-                    if(!queue.contains(e.endNode)){
-                        queue.add(e.endNode);
-                    }*/
-                    int newDist = n.dist + e.time;
-                    if (newDist < e.endNode.dist) {
-                        e.endNode.dist = newDist;       //Burde ny distanse settes før man legger inn i kø???
-                        e.endNode.ancestor = n;
-                    }
                     if(!e.endNode.added){
                         queue.add(e.endNode);
                         e.endNode.added = true;
@@ -69,7 +65,7 @@ public class Dijkstra {
         }
         if(printCoords){
             while(next != null){
-                res += "\n" + next.lat + "," + next.lon + "," + next.name + ", #FF0000";
+                res += "\n" + next.lat + "," + next.lon + "," + next.name + ", #FF0000" + ", tid: " + next.dist;
                 next = next.ancestor;
             }
         }

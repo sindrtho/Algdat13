@@ -35,12 +35,12 @@ public class Astar {
 
             if(n != targetNode) {
                 for (Edge e : n.edgeList) { //Legge inn ny distanse hvis det er kortere enn det de er allerede
+                    int newDist = n.dist + e.time;
+                    if (newDist < e.endNode.dist) {
+                        e.endNode.dist = newDist;
+                        e.endNode.ancestor = n;
+                    }
                     if (!e.endNode.visited) {
-                        int newDist = n.dist + e.time;
-                        if (newDist < e.endNode.dist) {
-                            e.endNode.dist = newDist;
-                            e.endNode.ancestor = n;
-                        }
                         if(!e.endNode.added){
                             e.endNode.setHaversine(targetNode);
                             priQue.add(e.endNode);
@@ -60,7 +60,7 @@ public class Astar {
                 if(printCoords){
                     res += "\n Breddegrader og Lengdegrader for korteste vei til kartet: ";
                     while(n != null) {
-                        res += "\n" + n.lat + "," + n.lon + "," + n.name + ", #FF0000";
+                        res += "\n" + n.lat + "," + n.lon + "," + n.name + ", #FF0000" + ", tid: " + n.dist;
                         n = n.ancestor;
                     }
                 }

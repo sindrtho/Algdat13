@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.PrintWriter;
+
 public class
 app {
     public static void main(String[] args) {
@@ -20,17 +23,27 @@ app {
 //        new ListeUtskriver<Edge>().utskrift("", leser.edgeList, true);
 
 
-        Grafleser leserDijkstra = new Grafleser(false, "src/filer/albania-noder.txt", "src/filer/albania-kanter.txt");
+        Grafleser leserDijkstra = new Grafleser(false, "src/filer/skan-noder.txt", "src/filer/skan-kanter.txt");
         System.out.println("\nDIJKSTRA:");
-        String resD = new Dijkstra(leserDijkstra).run(0, 50000, false);
-        System.out.println(resD);
+        String resD = new Dijkstra(leserDijkstra).run(oslo, trondheim, true);
+        //System.out.println(resD);
 
-        System.out.println("");
+        System.out.println("\n********************************\n");
 
-        Grafleser leserAstar = new Grafleser(false, "src/filer/albania-noder.txt", "src/filer/albania-kanter.txt");
+        Grafleser leserAstar = new Grafleser(false, "src/filer/skan-noder.txt", "src/filer/skan-kanter.txt");
         System.out.println("\nA-STAR:");
         Astar astar = new Astar(leserAstar);
-        String resA = astar.run(0, 50000, false);
-        System.out.println(resA);
+        String resA = astar.run(oslo, trondheim, true);
+        //System.out.println(resA);
+
+        try(
+            PrintWriter outDijk = new PrintWriter("src/outCoordsD.txt");
+            PrintWriter outAstar = new PrintWriter("src/outCoordsA.txt");
+        ){
+            outDijk.println(resD);
+            outAstar.println(resA);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }
