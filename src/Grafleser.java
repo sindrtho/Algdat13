@@ -17,7 +17,7 @@ import java.util.StringTokenizer;
 public class Grafleser {
 
     public ArrayList<Node> nodes;
-    public ArrayList<Edge> edges;
+    //public ArrayList<Edge> edges;
 
     public Grafleser(boolean url, String nodefile, String edgefile){
         if(!url) {
@@ -34,7 +34,7 @@ public class Grafleser {
                 int edgeCount = Integer.parseInt(st.nextToken());   //Number of total edges between nodes.
 
                 nodes = new ArrayList<>();
-                edges = new ArrayList<>();
+                //edges = new ArrayList<>();
 
                 Long startReadingNodes = System.currentTimeMillis();
 
@@ -56,7 +56,7 @@ public class Grafleser {
                     Node start = nodes.get(Integer.parseInt(st.nextToken()));
                     Node next = nodes.get(Integer.parseInt(st.nextToken()));
                     Edge newEdge = new Edge(start, next, Integer.parseInt(st.nextToken()));
-                    edges.add(newEdge);
+                    //edges.add(newEdge);
                     start.edgeList.add(newEdge);
                 }
 
@@ -68,18 +68,19 @@ public class Grafleser {
                 System.out.println("Time to Read Everything: " + ((endTime - startTime) / 1000) + "sec");
 
                 System.out.println("\nNumber of nodes: " + nodes.size());
-                System.out.println("Number of edges: " + edges.size());
+                System.out.println("Number of edges: " + edgeCount);
 
                 if (nodes.size() < 1000) {
                     System.out.println("\nNodes: ");
                     for (Node n : nodes)
                         System.out.println(n);
                 }
+                /*
                 if (edges.size() < 1000) {
                     System.out.println("\nEdges: ");
                     for (Edge e : edges)
                         System.out.println(e);
-                }
+                }*/
             } catch (Exception e) {
                 e.printStackTrace();
                 return;
@@ -102,7 +103,7 @@ public class Grafleser {
                 int edgeCount = Integer.parseInt(st.nextToken());   //Number of total edges between nodes.
 
                 nodes = new ArrayList<>();
-                edges = new ArrayList<>();
+                //edges = new ArrayList<>();
 
                 Long startReadingNodes = System.currentTimeMillis();
 
@@ -124,7 +125,7 @@ public class Grafleser {
                     Node start = nodes.get(Integer.parseInt(st.nextToken()));
                     Node next = nodes.get(Integer.parseInt(st.nextToken()));
                     Edge newEdge = new Edge(start, next, Integer.parseInt(st.nextToken()));
-                    edges.add(newEdge);
+                    //edges.add(newEdge);
                     start.edgeList.add(newEdge);
                 }
 
@@ -136,18 +137,18 @@ public class Grafleser {
                 System.out.println("Time to Read Everything: " + ((endTime - startTime) / 1000) + "sec");
 
                 System.out.println("\nNumber of nodes: " + nodes.size());
-                System.out.println("\nNumber of edges: " + edges.size());
+                System.out.println("\nNumber of edges: " + edgeCount);
 
                 if (nodes.size() < 1000) {
                     System.out.println("\nNodes: ");
                     for (Node n : nodes)
                         System.out.println(n);
-                }
+                }/*
                 if (edges.size() < 1000) {
                     System.out.println("\nEdges: ");
                     for (Edge e : edges)
                         System.out.println(e);
-                }
+                }*/
             }catch (Exception e){
                 e.printStackTrace();
             }finally {

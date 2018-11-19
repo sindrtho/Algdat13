@@ -63,6 +63,7 @@ public class Dijkstra {
         String res = "Antall noder tatt ut av køen: " + teller;
         Node next = end;
         int dist = end.dist;
+        Node.printTime(dist);
         if(next.ancestor == null){
             res += "\nFant ikke målnoden";
         }
@@ -73,7 +74,6 @@ public class Dijkstra {
             }
         }
 
-        Node.printTime(dist);
         return res;
     }
 

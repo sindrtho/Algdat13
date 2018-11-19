@@ -60,6 +60,9 @@ public class Astar {
                 String res = ""; //"N: Node, A: Ancestor, L: minLength\nStartNode: " + startNode.name + "\nN | A | L\n";
                 res += "antall noder tatt ut av køen: " + teller;
                 int dist = n.dist;
+
+                Node.printTime(dist);
+
                 if(printCoords){
                     res += "\n Breddegrader og Lengdegrader for korteste vei til kartet: ";
                     while(n != null) {
@@ -68,7 +71,6 @@ public class Astar {
                     }
                 }
 
-                Node.printTime(dist);
                 return res;
             }
         }
